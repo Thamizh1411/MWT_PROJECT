@@ -111,8 +111,8 @@ router.get('/leave-requests', async (req, res) => {
   try {
     const LeaveRequest = require('../models/LeaveRequest');
     const leaveRequests = await LeaveRequest.find({})
-      .populate('userId', 'name email')
-      .sort({ createdAt: -1 });
+      .populate('workerId', 'name email')
+      .sort({ appliedAt: -1 });
     res.json(leaveRequests);
   } catch (error) {
     console.error('Get all leave requests error:', error);

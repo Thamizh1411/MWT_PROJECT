@@ -1,6 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
+const { protect } = require('../middleware/auth');
 const User = require('../models/User');
 const Admin = require('../models/Admin');
 
@@ -85,6 +87,50 @@ router.post('/login', async (req, res) => {
     // Return user data without password
     const { password: _, ...userData } = user.toObject();
     res.json({ user: userData, token });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Google OAuth routes
+router.get('/google', (req, res, next) => {
+  // Check if Google OAuth is configured
+  if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+    return res.status(400).json({ message: 'Google OAuth not configured. Please set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in your environment variables.' });
+  }
+  passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
+});
+
+router.get('/google/callback',
+  (req, res, next) => {
+    // Check if Google OAuth is configured
+    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+      return res.status(500).json({ message: 'Google OAuth not configured' });
+    }
+    passport.authenticate('google', { failureRedirect: `${process.env.FRONTEND_URL || 'http://localhost:5173'}/login` })(req, res, next);
+  },
+  (req, res) => {
+    try {
+      // Generate JWT token for authenticated user
+      const token = jwt.sign(
+        { id: req.user._id, role: req.user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: '30d' }
+      );
+
+      // Redirect to frontend with token
+      res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}?token=${token}`);
+    } catch (error) {
+      console.error('Error in Google OAuth callback:', error);
+      res.redirect(`${process.env.FRONTEND_URL || 'http://localhost:5173'}/login?error=oauth_failed`);
+    }
+  }
+);
+
+// Get current user info
+router.get('/me', protect, async (req, res) => {
+  try {
+    res.json(req.user);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }

@@ -257,14 +257,7 @@ export default function BookingForm() {
                   Payment Summary
                 </h3>
                 <div className="space-y-2">
-                  <div className="flex justify-between text-gray-600">
-                    <span>Hourly Rate</span>
-                    <span>${worker.hourlyRate}/hr</span>
-                  </div>
-                  <div className="flex justify-between text-gray-600">
-                    <span>Estimated Duration</span>
-                    <span>2 hours</span>
-                  </div>
+                  
                   <div className="flex justify-between text-gray-600">
                     <span>Estimated Total</span>
                     <span>${estimatedCost}</span>

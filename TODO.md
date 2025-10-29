@@ -1,21 +1,17 @@
-# Update Application: Add Final Price, Advance Payment, Rating System
+# TODO: Add Leave Request Verification to Admin Dashboard
 
-## Backend Model Updates
-- [x] Update backend/models/Booking.js: Add advanceAmount, finalAmount, remainingAmount, rating, feedback, advancePaid, finalPaid fields. Update status enum to include 'final_price_submitted', 'final_payment_done', 'rated'
+## Steps to Complete:
+1. Modify AdminDashboard.jsx to fetch pending leave requests separately.
+2. Add a new section in the dashboard UI to display pending leave requests with details (worker name, dates, reason).
+3. Add approve and reject buttons for each pending leave request.
+4. Implement API calls to approve/reject leave requests using existing backend routes.
+5. Update the dashboard stats (pendingLeaves) after successful approval/rejection.
+6. Handle loading states and errors for the actions.
+7. Test the functionality to ensure it works correctly.
 
-## Backend Route Updates
-- [x] Modify backend/routes/bookings.js POST /: Include advanceAmount, set advancePaid: true
-- [x] Change backend/routes/bookings.js PUT /:id/complete: Only mark status as 'completed', no amount calculation
-- [x] Add backend/routes/bookings.js PUT /:id/submit-final-price: Worker submits finalAmount, calculates remainingAmount, sets status 'final_price_submitted', sends notification
-- [x] Add backend/routes/bookings.js PUT /:id/pay-remaining: User pays remaining, sets finalPaid: true, status 'final_payment_done'
-- [x] Add backend/routes/bookings.js PUT /:id/rate: User submits rating and feedback, updates status 'rated', recalculates worker's cumulative rating
+## Dependent Files:
+- src/pages/admin/AdminDashboard.jsx (main file to edit)
 
-## Frontend Updates
-- [x] src/pages/user/BookingForm.jsx: Add advance payment input field
-- [x] src/pages/worker/WorkHistory.jsx: Change "Mark Complete" to just mark complete. Add form for submitting final price on 'completed' bookings
-- [x] src/pages/user/BookingHistory.jsx: Add UI for paying remaining amount on 'final_price_submitted' bookings, show "Payment Successful" message. Add rating form after 'final_payment_done'. Update status displays and filters
-
-## Testing
-- [ ] Test workflow: booking with advance -> worker complete -> submit final price -> user pay remaining -> user rate
-- [ ] Ensure notifications are sent correctly
-- [ ] Verify worker rating updates cumulatively
+## Followup Steps:
+- Run the application and test the new leave request verification feature.
+- Ensure notifications are sent to workers upon approval/rejection (already handled in backend).

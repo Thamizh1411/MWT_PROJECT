@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import Layout from '../../components/Layout';
-import { Users, UserCheck, Calendar, DollarSign, AlertCircle, TrendingUp } from 'lucide-react';
+import { Users, UserCheck, Calendar, DollarSign, AlertCircle, TrendingUp, Check, X } from 'lucide-react';
 
 export default function AdminDashboard() {
   const { token } = useAuth();

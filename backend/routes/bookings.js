@@ -238,6 +238,7 @@ router.put('/:id/pay-remaining', async (req, res) => {
     }
 
     booking.finalPaid = true;
+    booking.remainingAmount = 0;
     booking.status = 'final_payment_done';
     await booking.save();
 

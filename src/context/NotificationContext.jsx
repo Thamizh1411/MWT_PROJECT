@@ -41,12 +41,12 @@ export const NotificationProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (user && token) {
       fetchNotifications();
     } else {
       setNotifications([]);
     }
-  }, [user]);
+  }, [user, token]);
 
   const getUserNotifications = () => notifications;
 

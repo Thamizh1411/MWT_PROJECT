@@ -142,7 +142,7 @@ export default function WorkerDashboard() {
             </div>
           )}
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             <Link
               to="/worker/history"
               className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
@@ -170,6 +170,21 @@ export default function WorkerDashboard() {
                   <p className="text-gray-600 mt-1">Track your income</p>
                 </div>
                 <DollarSign className="w-10 h-10 text-gray-400 group-hover:text-green-600 transition" />
+              </div>
+            </Link>
+
+            <Link
+              to="/worker/leave"
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition group"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-800 group-hover:text-purple-600 transition">
+                    Leave Requests
+                  </h3>
+                  <p className="text-gray-600 mt-1">Apply for time off</p>
+                </div>
+                <Calendar className="w-10 h-10 text-gray-400 group-hover:text-purple-600 transition" />
               </div>
             </Link>
           </div>

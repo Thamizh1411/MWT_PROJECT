@@ -12,7 +12,7 @@ export default function Profile() {
     address: user?.address || '',
     profession: user?.profession || '',
     hourlyRate: user?.hourlyRate || '',
-    skills: user?.skills?.join(', ') || '',
+    skills: Array.isArray(user?.skills) ? user.skills.join(', ') : '',
     experience: user?.experience || ''
   });
 
